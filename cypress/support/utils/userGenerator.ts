@@ -24,3 +24,29 @@ export function generateFullUser(): User {
         mobileNumber: faker.phone.number(),
     };
 }
+
+export function generateInvalidEmail(): string {
+    const tipos = [
+        () => faker.person.firstName(), // sem @ e domínio
+        () => `${faker.person.firstName()}@`, // sem domínio
+        () => `@${faker.internet.domainName()}`, // sem usuário
+        () => faker.internet.email().replace('@', '@@'), // @ duplicado
+        () => `${faker.person.firstName()} @${faker.internet.domainName()}`, // espaço
+    ];
+
+    return faker.helpers.arrayElement(tipos)();
+}
+
+export function generateInvalidPassword(): string {
+    const types = [
+        () => '', // vazia
+        () => faker.string.alpha(2), // muito curta (2 chars)
+        () => faker.string.alpha(5), // muito curta (5 chars)
+        () => faker.string.numeric(8), // só números
+        () => faker.string.alpha({ length: 8, casing: 'lower' }), // só minúsculas
+        () => '   ', // só espaços
+        () => faker.internet.password({ length: 3 }), // senha curta
+    ];
+
+    return faker.helpers.arrayElement(types)();
+}
