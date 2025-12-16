@@ -20,15 +20,7 @@ describe('Log in', () => {
     it('Should not log in.', () => {
       loginPage.fillInvalidEmailLoginInputs(user)
       loginPage.clickLoginButton()
-
-      cy.get('input[data-qa="login-email"]').then(($input) => {
-        const input = $input[0] as HTMLInputElement;
-
-        // validationMessage contém o texto que aparece no popup
-        expect(input.validationMessage).to.satisfy((msg: string) =>
-          msg.includes('incomplete') || msg.includes('symbol') || msg.includes('@') || msg.includes('satisfy') || msg.includes('required')
-        );
-      });
+      loginPage.verifyInvalidEmailMessage()
     })
   })
 
@@ -36,8 +28,7 @@ describe('Log in', () => {
     it('Should not log in.', () => {
       loginPage.fillInvalidPasswordLoginInputs(user)
       loginPage.clickLoginButton()
-
-      cy.get('input[data-qa="login-password"]').focus().blur() || cy.contains('Your email or password is incorrect!').should('be.visible')
+      loginPage.verifyInvalidPasswordMessage()
     })
   })
 

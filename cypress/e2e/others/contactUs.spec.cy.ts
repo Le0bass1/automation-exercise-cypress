@@ -21,6 +21,7 @@ describe('Contact Us', () => {
             contactUsPage.fillContactUsInputs(user)
             contactUsPage.uploadFile()
             contactUsPage.clickSubmitButton()
+            contactUsPage.verifySuccessMessage()
         })
     })
 })
