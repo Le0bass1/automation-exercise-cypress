@@ -15,6 +15,9 @@ export class ContactUsPage {
 
   clickSubmitButton() {
     cy.get('input[data-qa="submit-button"]').click()
+  }
+
+  verifySuccessMessage() {
     cy.contains('Success!').should('be.visible')
   }
 }
