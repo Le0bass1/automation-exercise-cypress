@@ -1,35 +1,3 @@
-# Automation Exercise - Cypress
-
-Projeto de automação de testes E2E para o site [Automation Exercise](https://automationexercise.com/) utilizando Cypress com TypeScript.
-
-## 🛠️ Tecnologias
-
-- [Cypress](https://www.cypress.io/) v15.7.1
-- [TypeScript](https://www.typescriptlang.org/) v5.9.3
-- [Faker.js](https://fakerjs.dev/) v10.1.0
-
-## 📁 Estrutura do Projeto
-
-```
-cypress/
-├── e2e/                    # Arquivos de teste
-│   ├── login.spec.cy.ts
-│   └── subscribe.spec.cy.ts
-├── fixtures/               # Dados estáticos para testes
-│   └── user.json
-└── support/
-    ├── commands.ts         # Comandos customizados
-    ├── e2e.ts              # Configuração de suporte
-    ├── pages/              # Page Objects
-    │   ├── accountCreatedPage.ts
-    │   ├── homePage.ts
-    │   ├── loginPage.ts
-    │   └── signupPage.ts
-    ├── types/              # Tipagens TypeScript
-    │   └── user.ts
-    └── utils/              # Utilitários
-        └── userGenerator.ts
-```
 
 ## ⚙️ Pré-requisitos
 
@@ -40,54 +8,61 @@ cypress/
 
 1. Clone o repositório:
 
-```bash
-git clone https://github.com/seu-usuario/automation-exercise-cypress.git
-```
+git clone https://github.com/seu-usuario/automation-exercise-cypress.git2. Acesse a pasta do projeto:
 
-2. Acesse a pasta do projeto:
+cd automation-exercise-cypress3. Instale as dependências:
 
-```bash
-cd automation-exercise-cypress
-```
-
-3. Instale as dependências:
-
-```bash
-npm install
-```
-
-## ▶️ Executando os Testes
+npm install## ▶️ Executando os Testes
 
 ### Modo Interativo (Cypress UI)
 
-```bash
-npx cypress open
-```
+npx cypress open### Modo Headless (Terminal)
 
-### Modo Headless (Terminal)
+npx cypress run### Executar testes por módulo
 
-```bash
-npx cypress run
-```
+# Testes de autenticação
+npx cypress run --spec "cypress/e2e/auth/**/*.cy.ts"
 
-### Executar um teste específico
+# Testes de outros módulos
+npx cypress run --spec "cypress/e2e/others/**/*.cy.ts"### Executar um teste específico
 
-```bash
-npx cypress run --spec "cypress/e2e/login.spec.cy.ts"
-```
+npx cypress run --spec "cypress/e2e/auth/login.spec.cy.ts"## 📋 Testes Disponíveis
 
-## 📋 Testes Disponíveis
+### 🔐 Autenticação (`auth/`)
 
-| Arquivo | Descrição |
-|---------|-----------|
-| `login.spec.cy.ts` | Testes de login e autenticação |
-| `subscribe.spec.cy.ts` | Testes de inscrição/newsletter |
+| Arquivo | Cenários |
+|---------|----------|
+| `login.spec.cy.ts` | Login com email inválido, senha inválida, credenciais válidas e logout |
+| `register.spec.cy.ts` | Registro com email existente e criação de conta com dados válidos |
+
+### 📝 Outros (`others/`)
+
+| Arquivo | Cenários |
+|---------|----------|
+| `contactUs.spec.cy.ts` | Envio de formulário de contato com upload de arquivo |
+| `testCases.spec.cy.ts` | Visualização e expansão dos casos de teste do site |
+
+### 🛒 Carrinho (`cart/`)
+> Em desenvolvimento
+
+### 📦 Produtos (`products/`)
+> Em desenvolvimento
 
 ## 🏗️ Padrões Utilizados
 
 - **Page Object Model (POM)**: Organização dos elementos e ações das páginas em classes separadas
-- **Fixtures**: Dados de teste centralizados
+- **Fixtures**: Dados de teste centralizados (`user.json`)
 - **Faker.js**: Geração de dados dinâmicos para testes
+  - `generateFullUser()` - Gera usuário completo com todos os dados
+  - `generateInvalidEmail()` - Gera emails inválidos para testes negativos
+  - `generateInvalidPassword()` - Gera senhas inválidas para testes negativos
+
+## ⚙️ Configuração
+
+O projeto está configurado com:
+- **Base URL**: `https://automationexercise.com/`
+- **Viewport**: 2560x1440
+- **Watch for file changes**: Desabilitado
 
 ## 📝 Licença
 
