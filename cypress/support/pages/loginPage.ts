@@ -39,7 +39,15 @@ export class LoginPage {
     }
 
     verifyInvalidPasswordMessage() {
-        cy.get('input[data-qa="login-password"]').focus().blur() || cy.contains('Your email or password is incorrect!').should('be.visible')
+        cy.get('input[data-qa="login-password"]').then(($input) => {
+            const input = $input[0] as HTMLInputElement;
+    
+            if (input.validationMessage) {
+                expect(input.validationMessage).to.not.be.empty;
+            } else {
+                cy.contains('Your email or password is incorrect!').should('be.visible');
+            }
+        });
     }
 
     clickLoginButton() {
