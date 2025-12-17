@@ -38,7 +38,7 @@ describe('Log in', () => {
         cy.log(`Attempting to log in as user: ${user.name}, with email: ${user.email}, and password: ${user.password}`)
         loginPage.fillLoginInputs()
         loginPage.clickLoginButton()
-        cy.contains('Logged in as').should('be.visible')
+        homePage.verifyUserIsLoggedIn()
       })
     })
   })
