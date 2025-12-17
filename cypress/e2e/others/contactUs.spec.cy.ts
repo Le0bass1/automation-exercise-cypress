@@ -1,23 +1,23 @@
-import { HomePage } from '../../support/pages/homePage'
+import { HeaderComponent } from '../../support/components/headerComponent'
 import { ContactUsPage } from '../../support/pages/contactUsPage'
 import { generateFullUser } from '../../support/utils/userGenerator'
 import { User } from '../../support/types/user'
 
 describe('Contact Us', () => {
-    const homePage = new HomePage()
+    const headerComponent = new HeaderComponent()
     const contactUsPage = new ContactUsPage()
 
     let user: User
 
     before(() => {
-        homePage.open()
+        cy.visit('/')
 
         user = generateFullUser()
     })
 
     describe('Successfully submit contact us form with file upload', () => {
         it('Should open contact us, and fill form with file upload successfully.', () => {
-            homePage.goToContactUsPage()
+            headerComponent.goToContactUsPage()
             contactUsPage.fillContactUsInputs(user)
             contactUsPage.uploadFile()
             contactUsPage.clickSubmitButton()

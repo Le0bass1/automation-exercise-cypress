@@ -1,4 +1,4 @@
-import { HomePage } from '../../support/pages/homePage'
+import { HeaderComponent } from '../../support/components/headerComponent'
 import { LoginPage } from '../../support/pages/loginPage'
 import { SignupPage } from '../../support/pages/signupPage'
 import { AccountCreatedPage } from '../../support/pages/accountCreatedPage'
@@ -6,7 +6,7 @@ import { User } from '../../support/types/user'
 import { generateFullUser } from '../../support/utils/userGenerator'
 
 describe('Create an account', () => {
-  const homePage = new HomePage()
+  const headerComponent = new HeaderComponent()
   const loginPage = new LoginPage()
   const signupPage = new SignupPage()
   const accountCreatedPage = new AccountCreatedPage()
@@ -15,7 +15,7 @@ describe('Create an account', () => {
 
   beforeEach(() => {
     cy.visit('/')
-    homePage.goToLoginPage()
+    headerComponent.goToLoginPage()
     user = generateFullUser()
   })
 

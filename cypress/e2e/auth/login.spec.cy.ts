@@ -1,17 +1,17 @@
 import { LoginPage } from '../../support/pages/loginPage'
-import { HomePage } from '../../support/pages/homePage'
 import { User } from '../../support/types/user'
 import { generateFullUser } from '../../support/utils/userGenerator'
+import { HeaderComponent } from '../../support/components/headerComponent'
 
 describe('Log in', () => {
-  const homePage = new HomePage()
+  const headerComponent = new HeaderComponent()
   const loginPage = new LoginPage()
 
   let user: User
 
   beforeEach(() => {
     cy.visit('/')
-    homePage.goToLoginPage()
+    headerComponent.goToLoginPage()
 
     user = generateFullUser()
   })
@@ -38,7 +38,7 @@ describe('Log in', () => {
         cy.log(`Attempting to log in as user: ${user.name}, with email: ${user.email}, and password: ${user.password}`)
         loginPage.fillLoginInputs()
         loginPage.clickLoginButton()
-        homePage.verifyUserIsLoggedIn()
+        headerComponent.verifyUserIsLoggedIn()
       })
     })
   })
@@ -47,7 +47,7 @@ describe('Log in', () => {
     it('Should log out successfully.', () => {
       loginPage.fillLoginInputs()
       loginPage.clickLoginButton()
-      homePage.logout()
+      headerComponent.logout()
       cy.contains('Login to your account').should('be.visible')
     })
   })
