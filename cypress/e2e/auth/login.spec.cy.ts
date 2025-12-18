@@ -2,15 +2,18 @@ import { LoginPage } from '../../support/pages/loginPage'
 import { User } from '../../support/types/user'
 import { generateFullUser } from '../../support/utils/userGenerator'
 import { HeaderComponent } from '../../support/components/headerComponent'
+import { HomePage } from '../../support/pages/homePage'
 
 describe('Log in', () => {
   const headerComponent = new HeaderComponent()
+  const homePage = new HomePage()
   const loginPage = new LoginPage()
 
   let user: User
 
   beforeEach(() => {
     cy.visit('/')
+    homePage.verifyHomePage()
     headerComponent.goToLoginPage()
 
     user = generateFullUser()

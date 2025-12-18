@@ -4,9 +4,11 @@ import { SignupPage } from '../../support/pages/signupPage'
 import { AccountCreatedPage } from '../../support/pages/accountCreatedPage'
 import { User } from '../../support/types/user'
 import { generateFullUser } from '../../support/utils/userGenerator'
+import { HomePage } from '../../support/pages/homePage'
 
 describe('Create an account', () => {
   const headerComponent = new HeaderComponent()
+  const homePage = new HomePage()
   const loginPage = new LoginPage()
   const signupPage = new SignupPage()
   const accountCreatedPage = new AccountCreatedPage()
@@ -15,6 +17,7 @@ describe('Create an account', () => {
 
   beforeEach(() => {
     cy.visit('/')
+    homePage.verifyHomePage()
     headerComponent.goToLoginPage()
     user = generateFullUser()
   })
