@@ -1,5 +1,5 @@
 export class HomePage {
-  open() {
+  verifyHomePage() {
     cy.visit('/')
     cy.contains('Features Items').should('be.visible')
   }

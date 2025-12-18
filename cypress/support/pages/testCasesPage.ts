@@ -3,7 +3,7 @@ export class TestCasesPage {
         cy.contains('Test Cases').should('be.visible')
     }
 
-    verifyUserCanSeeAllTestCases(minimumItems: number) {
+    checksIfTestCasesAreVisible(minimumItems: number) {
         cy.get('.panel-group')
             .should('be.visible')
             .find('.panel')
