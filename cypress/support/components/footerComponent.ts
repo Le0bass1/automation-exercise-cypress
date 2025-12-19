@@ -6,7 +6,9 @@ export class FooterComponent {
     }
 
     fillNewsletterForm() {
-        cy.get(this.selectors.container).type('test@test.com')
+        cy.fixture('user.json').then((user) => {
+            cy.get(this.selectors.container).type(user.email)
+        })
         cy.get(this.selectors.subscribeButton).click()
     }
 
