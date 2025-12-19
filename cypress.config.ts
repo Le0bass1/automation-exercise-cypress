@@ -1,4 +1,6 @@
 import { defineConfig } from "cypress";
+import * as fs from "fs";
+import * as path from "path";
 
 export default defineConfig({
   e2e: {
@@ -7,7 +9,13 @@ export default defineConfig({
     watchForFileChanges: false,
     baseUrl: "https://automationexercise.com/",
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      // Clean the screenshots folder before each test
+      const screenshotsFolder = path.join(__dirname, 'cypress', 'screenshots');
+      if (fs.existsSync(screenshotsFolder)) {
+        fs.rmSync(screenshotsFolder, { recursive: true, force: true });
+      }
+      
+      return config;
     },
   },
 });
