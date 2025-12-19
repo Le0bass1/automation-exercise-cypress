@@ -1,23 +1,35 @@
 export class ProductsPage {
+  selectors = {
+    allProductsTitle: 'All Products',
+    searchInput: '#search_product',
+    searchSubmitButton: '#submit_search',
+    productCard: '.features_items .col-sm-4',
+    productName: '.productinfo p',
+    productImage: 'img',
+    productPrice: '.productinfo h2',
+    addToCartButton: 'Add to cart',
+    viewProductLink: 'View Product'
+  }
+
   verifyProductsPage() {
-    cy.contains('All Products').should('be.visible')
+    cy.contains(this.selectors.allProductsTitle).should('be.visible')
   }
 
   searchForProduct(productName: string) {
-    cy.get('#search_product').type(productName)
-    cy.get('#submit_search').click()
+    cy.get(this.selectors.searchInput).type(productName)
+    cy.get(this.selectors.searchSubmitButton).click()
   }
 
   verifySearchResultsContain(productName: string) {
-    cy.get('.features_items .col-sm-4').should('have.length.greaterThan', 0)
-    cy.get('.features_items .col-sm-4 .productinfo p')
+    cy.get(this.selectors.productCard).should('have.length.greaterThan', 0)
+    cy.get(`${this.selectors.productCard} ${this.selectors.productName}`)
       .should('contain.text', productName)
   }
 
   verifyAllSearchResultsContain(productName: string) {
-    cy.get('.features_items .col-sm-4').should('have.length.greaterThan', 0)
-    cy.get('.features_items .col-sm-4').each(($card) => {
-      cy.wrap($card).find('.productinfo p')
+    cy.get(this.selectors.productCard).should('have.length.greaterThan', 0)
+    cy.get(this.selectors.productCard).each(($card) => {
+      cy.wrap($card).find(this.selectors.productName)
         .should('be.visible')
         .invoke('text')
         .should('include', productName)
@@ -25,27 +37,22 @@ export class ProductsPage {
   }
 
   verifyProductsAreVisible() {
-    cy.get('.features_items .col-sm-4').should('have.length.greaterThan', 0)
+    cy.get(this.selectors.productCard).should('have.length.greaterThan', 0)
   }
 
   verifyFirstProductCardElements() {
-    cy.get('.features_items .col-sm-4').first().within(() => {
-      // Verifica imagem do produto
-      cy.get('img').should('be.visible')
-      // Verifica preço
-      cy.get('.productinfo h2').should('be.visible')
-      // Verifica nome do produto
-      cy.get('.productinfo p').should('be.visible')
-      // Verifica botão "Add to cart"
-      cy.contains('Add to cart').should('be.visible')
-      // Verifica link "View Product"
-      cy.contains('View Product').should('be.visible')
+    cy.get(this.selectors.productCard).first().within(() => {
+      cy.get(this.selectors.productImage).should('be.visible')
+      cy.get(this.selectors.productPrice).should('be.visible')
+      cy.get(this.selectors.productName).should('be.visible')
+      cy.contains(this.selectors.addToCartButton).should('be.visible')
+      cy.contains(this.selectors.viewProductLink).should('be.visible')
     })
   }
 
   clickFirstViewProduct() {
-    cy.get('.features_items .col-sm-4').first().within(() => {
-      cy.contains('View Product').click()
+    cy.get(this.selectors.productCard).first().within(() => {
+      cy.contains(this.selectors.viewProductLink).click()
     })
   }
 }

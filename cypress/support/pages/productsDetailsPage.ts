@@ -1,43 +1,43 @@
 export class ProductsDetailsPage {
+    selectors = {
+        productImage: '.product-information img, .view-product img',
+        productTitle: '.product-information h2',
+        categoryText: 'Category:',
+        productPrice: '.product-information span span',
+        availabilityText: 'Availability:',
+        conditionText: 'Condition:',
+        brandText: 'Brand:',
+        quantityInput: '#quantity',
+        addToCartButton: 'button.cart',
+        reviewSectionTitle: 'Write Your Review',
+        reviewNameInput: '#name',
+        reviewEmailInput: '#email',
+        reviewTextArea: '#review',
+        reviewSubmitButton: '#button-review',
+        productInformation: '.product-information'
+    }
+
     verifyProductDetailPage() {
         cy.url().should('include', '/product_details/')
     }
 
     verifyProductDetailsElements() {
-        // Verifica imagem do produto
-        cy.get('.product-information img, .view-product img').should('be.visible')
-
-        // Verifica nome do produto
-        cy.get('.product-information h2').should('be.visible')
-
-        // Verifica categoria
-        cy.get('.product-information p').contains('Category:').should('be.visible')
-
-        // Verifica preço
-        cy.get('.product-information span span').should('be.visible')
-
-        // Verifica disponibilidade
-        cy.get('.product-information').contains('Availability:').should('be.visible')
-
-        // Verifica condição
-        cy.get('.product-information').contains('Condition:').should('be.visible')
-
-        // Verifica marca
-        cy.get('.product-information').contains('Brand:').should('be.visible')
-
-        // Verifica campo de quantidade
-        cy.get('#quantity').should('be.visible')
-
-        // Verifica botão "Add to cart"
-        cy.get('button.cart').should('be.visible')
+        cy.get(this.selectors.productImage).should('be.visible')
+        cy.get(this.selectors.productTitle).should('be.visible')
+        cy.get(`${this.selectors.productInformation} p`).contains(this.selectors.categoryText).should('be.visible')
+        cy.get(this.selectors.productPrice).should('be.visible')
+        cy.get(this.selectors.productInformation).contains(this.selectors.availabilityText).should('be.visible')
+        cy.get(this.selectors.productInformation).contains(this.selectors.conditionText).should('be.visible')
+        cy.get(this.selectors.productInformation).contains(this.selectors.brandText).should('be.visible')
+        cy.get(this.selectors.quantityInput).should('be.visible')
+        cy.get(this.selectors.addToCartButton).should('be.visible')
     }
 
     verifyReviewSection() {
-        // Verifica seção de review
-        cy.contains('Write Your Review').should('be.visible')
-        cy.get('#name').should('be.visible')
-        cy.get('#email').should('be.visible')
-        cy.get('#review').should('be.visible')
-        cy.get('#button-review').should('be.visible')
+        cy.contains(this.selectors.reviewSectionTitle).should('be.visible')
+        cy.get(this.selectors.reviewNameInput).should('be.visible')
+        cy.get(this.selectors.reviewEmailInput).should('be.visible')
+        cy.get(this.selectors.reviewTextArea).should('be.visible')
+        cy.get(this.selectors.reviewSubmitButton).should('be.visible')
       }
 }

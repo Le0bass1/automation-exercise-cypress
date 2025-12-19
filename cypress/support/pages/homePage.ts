@@ -1,6 +1,9 @@
 export class HomePage {
+  selectors = {
+    featuresItemsText: 'Features Items'
+  }
+  
   verifyHomePage() {
-    cy.visit('/')
-    cy.contains('Features Items').should('be.visible')
+    cy.contains(this.selectors.featuresItemsText).should('be.visible')
   }
 }

@@ -2,22 +2,32 @@ import { User } from "../types/user";
 import { generateInvalidEmail, generateInvalidPassword } from "../utils/userGenerator";
 
 export class LoginPage {
+    selectors = {
+        loginEmailInput: 'input[data-qa="login-email"]',
+        loginPasswordInput: 'input[data-qa="login-password"]',
+        loginButton: 'button[data-qa="login-button"]',
+        signupNameInput: 'input[data-qa="signup-name"]',
+        signupEmailInput: 'input[data-qa="signup-email"]',
+        signupButton: 'button[data-qa="signup-button"]',
+        invalidCredentialsMessage: 'Your email or password is incorrect!'
+    }
+
     // Login Methods
 
     fillLoginForm() {
         cy.fixture('user.json').then((user) => {
-            cy.get('input[data-qa="login-email"]').type(user.email)
-            cy.get('input[data-qa="login-password"]').type(user.password)
+            cy.get(this.selectors.loginEmailInput).type(user.email)
+            cy.get(this.selectors.loginPasswordInput).type(user.password)
         })
     }
 
     fillLoginFormWithInvalidEmail(user: User) {
-        cy.get('input[data-qa="login-email"]').type(generateInvalidEmail())
-        cy.get('input[data-qa="login-password"]').type(user.password)
+        cy.get(this.selectors.loginEmailInput).type(generateInvalidEmail())
+        cy.get(this.selectors.loginPasswordInput).type(user.password)
     }
 
     verifyInvalidEmailErrorMessage() {
-        cy.get('input[data-qa="login-email"]').then(($input) => {
+        cy.get(this.selectors.loginEmailInput).then(($input) => {
             const input = $input[0] as HTMLInputElement;
 
             if (input.validationMessage) {
@@ -25,50 +35,50 @@ export class LoginPage {
                     msg.includes('incomplete') || msg.includes('symbol') || msg.includes('@') || msg.includes('required')
                 );
             } else {
-                cy.contains('Your email or password is incorrect!').should('be.visible');
+                cy.contains(this.selectors.invalidCredentialsMessage).should('be.visible');
             }
         });
     }
 
     fillLoginFormWithInvalidPassword(user: User) {
         const invalidPassword = generateInvalidPassword()
-        cy.get('input[data-qa="login-email"]').type(user.email)
+        cy.get(this.selectors.loginEmailInput).type(user.email)
         if (invalidPassword !== '') {
-            cy.get('input[data-qa="login-password"]').type(invalidPassword)
+            cy.get(this.selectors.loginPasswordInput).type(invalidPassword)
         }
     }
 
     verifyInvalidPasswordErrorMessage() {
-        cy.get('input[data-qa="login-password"]').then(($input) => {
+        cy.get(this.selectors.loginPasswordInput).then(($input) => {
             const input = $input[0] as HTMLInputElement;
     
             if (input.validationMessage) {
                 expect(input.validationMessage).to.not.be.empty;
             } else {
-                cy.contains('Your email or password is incorrect!').should('be.visible');
+                cy.contains(this.selectors.invalidCredentialsMessage).should('be.visible');
             }
         });
     }
 
     clickLoginButton() {
-        cy.get('button[data-qa="login-button"]').click()
+        cy.get(this.selectors.loginButton).click()
     }
 
     // Register Methods
 
     fillSignupForm(user: User) {
-        cy.get('input[data-qa="signup-name"]').type(user.name)
-        cy.get('input[data-qa="signup-email"]').type(user.email)
+        cy.get(this.selectors.signupNameInput).type(user.name)
+        cy.get(this.selectors.signupEmailInput).type(user.email)
     }
 
     fillSignupFormWithExistingEmail(user: User) {
         cy.fixture('user.json').then((emailAlreadyExists) => {
-            cy.get('input[data-qa="signup-name"]').type(user.name)
-            cy.get('input[data-qa="signup-email"]').type(emailAlreadyExists.email)
+            cy.get(this.selectors.signupNameInput).type(user.name)
+            cy.get(this.selectors.signupEmailInput).type(emailAlreadyExists.email)
         })
     }
 
     clickSignupButton() {
-        cy.get('button[data-qa="signup-button"]').click()
+        cy.get(this.selectors.signupButton).click()
     }
 }

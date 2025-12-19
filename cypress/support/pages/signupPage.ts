@@ -9,31 +9,51 @@ function getMonthName(month: string): string {
 }
 
 export class SignupPage {
+  selectors = {
+    genderMr: 'input[id="id_gender1"]',
+    genderMrs: 'input[id="id_gender2"]',
+    passwordInput: 'input[data-qa="password"]',
+    daysSelect: 'select[data-qa="days"]',
+    monthsSelect: 'select[data-qa="months"]',
+    yearsSelect: 'select[data-qa="years"]',
+    firstNameInput: 'input[data-qa="first_name"]',
+    lastNameInput: 'input[data-qa="last_name"]',
+    companyInput: 'input[data-qa="company"]',
+    addressInput: 'input[data-qa="address"]',
+    address2Input: 'input[data-qa="address2"]',
+    countrySelect: 'select[data-qa="country"]',
+    stateInput: 'input[data-qa="state"]',
+    cityInput: 'input[data-qa="city"]',
+    zipcodeInput: 'input[data-qa="zipcode"]',
+    mobileNumberInput: 'input[data-qa="mobile_number"]',
+    createAccountButton: 'button[data-qa="create-account"]'
+  }
+
   fillSignupInputs(user: User) {
     const [year, month, day] = user.birthday.split('-');
 
     if (user.title === "Mr") {
-      cy.get('input[id="id_gender1"]').click()
+      cy.get(this.selectors.genderMr).click()
     } else {
-      cy.get('input[id="id_gender2"]').click()
+      cy.get(this.selectors.genderMrs).click()
     }
-    cy.get('input[data-qa="password"]').type(user.password)
-    cy.get('select[data-qa="days"]').select(String(Number(day)));      // Remove zero à esquerda: "05" → "5"
-    cy.get('select[data-qa="months"]').select(getMonthName(month));     // "01" → "January"
-    cy.get('select[data-qa="years"]').select(year);
-    cy.get('input[data-qa="first_name"]').type(user.firstName)
-    cy.get('input[data-qa="last_name"]').type(user.lastName)
-    cy.get('input[data-qa="company"]').type(user.company)
-    cy.get('input[data-qa="address"]').type(user.address1)
-    cy.get('input[data-qa="address2"]').type(user.address2)
-    cy.get('select[data-qa="country"]').select(user.country)
-    cy.get('input[data-qa="state"]').type(user.state)
-    cy.get('input[data-qa="city"]').type(user.city)
-    cy.get('input[data-qa="zipcode"]').type(user.zipcode)
-    cy.get('input[data-qa="mobile_number"]').type(user.mobileNumber)
+    cy.get(this.selectors.passwordInput).type(user.password)
+    cy.get(this.selectors.daysSelect).select(String(Number(day)));      // Remove leading zeros: "05" → "5"
+    cy.get(this.selectors.monthsSelect).select(getMonthName(month));     // "01" → "January"
+    cy.get(this.selectors.yearsSelect).select(year);
+    cy.get(this.selectors.firstNameInput).type(user.firstName)
+    cy.get(this.selectors.lastNameInput).type(user.lastName)
+    cy.get(this.selectors.companyInput).type(user.company)
+    cy.get(this.selectors.addressInput).type(user.address1)
+    cy.get(this.selectors.address2Input).type(user.address2)
+    cy.get(this.selectors.countrySelect).select(user.country)
+    cy.get(this.selectors.stateInput).type(user.state)
+    cy.get(this.selectors.cityInput).type(user.city)
+    cy.get(this.selectors.zipcodeInput).type(user.zipcode)
+    cy.get(this.selectors.mobileNumberInput).type(user.mobileNumber)
   }
 
   clickSignupButton() {
-    cy.get('button[data-qa="create-account"]').click()
+    cy.get(this.selectors.createAccountButton).click()
   }
 }

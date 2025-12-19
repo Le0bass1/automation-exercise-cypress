@@ -1,24 +1,32 @@
 export class TestCasesPage {
+    selectors = {
+        testCasesTitle: 'Test Cases',
+        panelGroup: '.panel-group',
+        panel: '.panel',
+        panelTitleLink: '.panel-title a',
+        panelCollapse: '.panel-collapse'
+    }
+
     verifyTestCasesPage() {
-        cy.contains('Test Cases').should('be.visible')
+        cy.contains(this.selectors.testCasesTitle).should('be.visible')
     }
 
     checksIfTestCasesAreVisible(minimumItems: number) {
-        cy.get('.panel-group')
+        cy.get(this.selectors.panelGroup)
             .should('be.visible')
-            .find('.panel')
+            .find(this.selectors.panel)
             .should('have.length.at.least', minimumItems)
     }
 
     clickTestCaseByNumber(testCaseNumber: number) {
-        cy.get('.panel-group .panel')
+        cy.get(`${this.selectors.panelGroup} ${this.selectors.panel}`)
             .eq(testCaseNumber - 1)
-            .find('.panel-title a')
+            .find(this.selectors.panelTitleLink)
             .click()
 
-            cy.get('.panel-group .panel')
+            cy.get(`${this.selectors.panelGroup} ${this.selectors.panel}`)
             .eq(testCaseNumber - 1)
-            .find('.panel-collapse')
+            .find(this.selectors.panelCollapse)
             .should('be.visible')
             .and('have.class', 'in')
     }
