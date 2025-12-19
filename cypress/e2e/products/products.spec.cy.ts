@@ -11,30 +11,39 @@ describe('Products', () => {
   const productsPage = new ProductsPage()
   const productsDetailsPage = new ProductsDetailsPage()
 
-  before(() => {
+  beforeEach(() => {
     cy.visit('/')
     homePage.verifyHomePage()
     headerComponent.goToLoginPage()
 
     cy.fixture('user.json').then((user) => {
-        cy.log(`Attempting to log in as user: ${user.name}, with email: ${user.email}, and password: ${user.password}`)
-        loginPage.fillLoginInputs()
-        loginPage.clickLoginButton()
-        headerComponent.verifyUserIsLoggedIn()
+      cy.log(`Attempting to log in as user: ${user.name}, with email: ${user.email}, and password: ${user.password}`)
+      loginPage.fillLoginInputs()
+      loginPage.clickLoginButton()
+      headerComponent.verifyUserIsLoggedIn()
     })
     headerComponent.goToProducts()
   })
 
-  describe('Verify All Products and product detail page', () => {
-    it('Should display all products, click on first view product and verify product details and review section', () => {
-      headerComponent.goToProducts()
+  describe('Product listing and details', () => {
+    it('Should display all products, verify product card elements, and navigate to product details page.', () => {
       productsPage.verifyProductsPage()
-      productsPage.checksIfProductsAreVisible()
-      productsPage.verifyProductCardElements()
+      productsPage.verifyProductsAreVisible()
+      productsPage.verifyFirstProductCardElements()
       productsPage.clickFirstViewProduct()
       productsDetailsPage.verifyProductDetailPage()
       productsDetailsPage.verifyProductDetailsElements()
       productsDetailsPage.verifyReviewSection()
+    })
+  })
+
+  describe('Product search', () => {
+    it('Should search for a product and verify all search results contain the search term.', () => {
+      productsPage.verifyProductsPage()
+      productsPage.verifyProductsAreVisible()
+      productsPage.verifyFirstProductCardElements()
+      productsPage.searchForProduct('Top')
+      productsPage.verifySearchResultsContain('Top')
     })
   })
 })
