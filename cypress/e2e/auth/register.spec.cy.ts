@@ -6,7 +6,7 @@ import { User } from '../../support/types/user'
 import { generateFullUser } from '../../support/utils/userGenerator'
 import { HomePage } from '../../support/pages/homePage'
 
-describe('Create an account', () => {
+describe('User Registration', () => {
   const headerComponent = new HeaderComponent()
   const homePage = new HomePage()
   const loginPage = new LoginPage()
@@ -22,17 +22,17 @@ describe('Create an account', () => {
     user = generateFullUser()
   })
 
-  describe('With existing email', () => {
-    it('Should not create an account', () => {
-      loginPage.fillExistingEmailRegisterInputs(user)
+  describe('When email already exists', () => {
+    it('should display error message and prevent account creation', () => {
+      loginPage.fillSignupFormWithExistingEmail(user)
       loginPage.clickSignupButton()
       cy.contains('Email Address already exist!').should('be.visible')
     })
   })
 
-  describe('With valid user data', () => {
-    it('Should create an account successfully', () => {
-      loginPage.fillRegisterInputs(user)
+  describe('When user data is valid', () => {
+    it('should successfully create account and display confirmation page', () => {
+      loginPage.fillSignupForm(user)
       loginPage.clickSignupButton()
       signupPage.fillSignupInputs(user)
       signupPage.clickSignupButton()

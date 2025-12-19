@@ -4,7 +4,7 @@ import { generateFullUser } from '../../support/utils/userGenerator'
 import { User } from '../../support/types/user'
 import { HomePage } from '../../support/pages/homePage'
 
-describe('Contact Us', () => {
+describe('Contact Us Form', () => {
     const headerComponent = new HeaderComponent()
     const homePage = new HomePage()
     const contactUsPage = new ContactUsPage()
@@ -17,13 +17,13 @@ describe('Contact Us', () => {
         user = generateFullUser()
     })
 
-    describe('Successfully submit contact us form with file upload', () => {
-        it('Should open contact us, and fill form with file upload successfully.', () => {
+    describe('Form submission with file upload', () => {
+        it('submits contact form with all fields and file attachment', () => {
             headerComponent.goToContactUsPage()
-            contactUsPage.fillContactUsInputs(user)
-            contactUsPage.uploadFile()
-            contactUsPage.clickSubmitButton()
-            contactUsPage.verifySuccessMessage()
+            contactUsPage.fillContactForm(user)
+            contactUsPage.attachFile()
+            contactUsPage.submitForm()
+            contactUsPage.shouldShowSuccessMessage()
         })
     })
 })

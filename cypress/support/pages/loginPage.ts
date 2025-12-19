@@ -4,19 +4,19 @@ import { generateInvalidEmail, generateInvalidPassword } from "../utils/userGene
 export class LoginPage {
     // Login Methods
 
-    fillLoginInputs() {
+    fillLoginForm() {
         cy.fixture('user.json').then((user) => {
             cy.get('input[data-qa="login-email"]').type(user.email)
             cy.get('input[data-qa="login-password"]').type(user.password)
         })
     }
 
-    fillInvalidEmailLoginInputs(user: User) {
+    fillLoginFormWithInvalidEmail(user: User) {
         cy.get('input[data-qa="login-email"]').type(generateInvalidEmail())
         cy.get('input[data-qa="login-password"]').type(user.password)
     }
 
-    verifyInvalidEmailMessage() {
+    verifyInvalidEmailErrorMessage() {
         cy.get('input[data-qa="login-email"]').then(($input) => {
             const input = $input[0] as HTMLInputElement;
 
@@ -30,7 +30,7 @@ export class LoginPage {
         });
     }
 
-    fillInvalidPasswordLoginInputs(user: User) {
+    fillLoginFormWithInvalidPassword(user: User) {
         const invalidPassword = generateInvalidPassword()
         cy.get('input[data-qa="login-email"]').type(user.email)
         if (invalidPassword !== '') {
@@ -38,7 +38,7 @@ export class LoginPage {
         }
     }
 
-    verifyInvalidPasswordMessage() {
+    verifyInvalidPasswordErrorMessage() {
         cy.get('input[data-qa="login-password"]').then(($input) => {
             const input = $input[0] as HTMLInputElement;
     
@@ -56,12 +56,12 @@ export class LoginPage {
 
     // Register Methods
 
-    fillRegisterInputs(user: User) {
+    fillSignupForm(user: User) {
         cy.get('input[data-qa="signup-name"]').type(user.name)
         cy.get('input[data-qa="signup-email"]').type(user.email)
     }
 
-    fillExistingEmailRegisterInputs(user: User) {
+    fillSignupFormWithExistingEmail(user: User) {
         cy.fixture('user.json').then((emailAlreadyExists) => {
             cy.get('input[data-qa="signup-name"]').type(user.name)
             cy.get('input[data-qa="signup-email"]').type(emailAlreadyExists.email)

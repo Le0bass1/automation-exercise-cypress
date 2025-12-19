@@ -4,7 +4,7 @@ import { generateFullUser } from '../../support/utils/userGenerator'
 import { HeaderComponent } from '../../support/components/headerComponent'
 import { HomePage } from '../../support/pages/homePage'
 
-describe('Log in', () => {
+describe('User Login', () => {
   const headerComponent = new HeaderComponent()
   const homePage = new HomePage()
   const loginPage = new LoginPage()
@@ -19,36 +19,36 @@ describe('Log in', () => {
     user = generateFullUser()
   })
 
-  describe('With invalid email', () => {
-    it('Should not log in.', () => {
-      loginPage.fillInvalidEmailLoginInputs(user)
+  describe('When email is invalid', () => {
+    it('should display error message and prevent user from logging in', () => {
+      loginPage.fillLoginFormWithInvalidEmail(user)
       loginPage.clickLoginButton()
-      loginPage.verifyInvalidEmailMessage()
+      loginPage.verifyInvalidEmailErrorMessage()
     })
   })
 
-  describe('With invalid password', () => {
-    it('Should not log in.', () => {
-      loginPage.fillInvalidPasswordLoginInputs(user)
+  describe('When password is invalid', () => {
+    it('should display error message and prevent user from logging in', () => {
+      loginPage.fillLoginFormWithInvalidPassword(user)
       loginPage.clickLoginButton()
-      loginPage.verifyInvalidPasswordMessage()
+      loginPage.verifyInvalidPasswordErrorMessage()
     })
   })
 
-  describe('With valid credentials', () => {
-    it('Should log in normally.', () => {
+  describe('When credentials are valid', () => {
+    it('should successfully authenticate user and display logged-in state', () => {
       cy.fixture('user.json').then((user) => {
         cy.log(`Attempting to log in as user: ${user.name}, with email: ${user.email}, and password: ${user.password}`)
-        loginPage.fillLoginInputs()
+        loginPage.fillLoginForm()
         loginPage.clickLoginButton()
         headerComponent.verifyUserIsLoggedIn()
       })
     })
   })
 
-  describe('Logout', () => {
-    it('Should log out successfully.', () => {
-      loginPage.fillLoginInputs()
+  describe('User Logout', () => {
+    it('should successfully log out user and redirect to login page', () => {
+      loginPage.fillLoginForm()
       loginPage.clickLoginButton()
       headerComponent.logout()
       cy.contains('Login to your account').should('be.visible')

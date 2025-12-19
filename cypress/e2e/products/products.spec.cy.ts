@@ -18,7 +18,7 @@ describe('Products', () => {
 
     cy.fixture('user.json').then((user) => {
       cy.log(`Attempting to log in as user: ${user.name}, with email: ${user.email}, and password: ${user.password}`)
-      loginPage.fillLoginInputs()
+      loginPage.fillLoginForm()
       loginPage.clickLoginButton()
       headerComponent.verifyUserIsLoggedIn()
     })
