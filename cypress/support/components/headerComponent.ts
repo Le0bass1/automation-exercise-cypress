@@ -17,8 +17,8 @@ export class HeaderComponent {
     cy.get(this.selectors.productsLink).click()
   }
 
-  goToCart() {
-    cy.get(this.selectors.cartLink).click()
+  goToCartPage() {
+    cy.get(this.selectors.cartLink).first().click()
   }
 
   goToLoginPage() {
