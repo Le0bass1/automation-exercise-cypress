@@ -1,3 +1,5 @@
+import { CartProduct } from '../types/product'
+
 export class ProductsPage {
   selectors = {
     allProductsTitle: 'All Products',
@@ -8,7 +10,10 @@ export class ProductsPage {
     productImage: 'img',
     productPrice: '.productinfo h2',
     addToCartButton: 'Add to cart',
-    viewProductLink: 'View Product'
+    viewProductLink: 'View Product',
+    modal: '.modal',
+    continueShoppingButton: 'Continue Shopping',
+    viewCartButton: 'View Cart',
   }
 
   verifyProductsPage() {
@@ -40,13 +45,15 @@ export class ProductsPage {
     cy.get(this.selectors.productCard).should('have.length.greaterThan', 0)
   }
 
-  verifyFirstProductCardElements() {
-    cy.get(this.selectors.productCard).first().within(() => {
-      cy.get(this.selectors.productImage).should('be.visible')
-      cy.get(this.selectors.productPrice).should('be.visible')
-      cy.get(this.selectors.productName).should('be.visible')
-      cy.contains(this.selectors.addToCartButton).should('be.visible')
-      cy.contains(this.selectors.viewProductLink).should('be.visible')
+  verifyAllProductCardElements() {
+    cy.get(this.selectors.productCard).each(($card) => {
+      cy.wrap($card).within(() => {
+        cy.get(this.selectors.productImage).should('be.visible')
+        cy.get(this.selectors.productPrice).should('be.visible')
+        cy.get(this.selectors.productName).should('be.visible')
+        cy.contains(this.selectors.addToCartButton).should('be.visible')
+        cy.contains(this.selectors.viewProductLink).should('be.visible')
+      })
     })
   }
 
@@ -54,5 +61,31 @@ export class ProductsPage {
     cy.get(this.selectors.productCard).first().within(() => {
       cy.contains(this.selectors.viewProductLink).click()
     })
+  }
+
+  addToCartFirstProduct() {
+    cy.extractProductDataAndSaveToCart(0)
+    cy.get(this.selectors.productCard).first().within(() => {
+      cy.contains(this.selectors.addToCartButton).should('be.visible').click()
+    })
+  }
+  
+  addToCartSecondProduct() {
+    cy.extractProductDataAndSaveToCart(1)
+    cy.get(this.selectors.productCard).eq(1).within(() => {
+      cy.contains(this.selectors.addToCartButton).should('be.visible').click()
+    })
+  }
+
+  verifyModalIsVisible() {
+    cy.get(this.selectors.modal).should('be.visible')
+  }
+
+  clickContinueShoppingButtonInModal() {
+    cy.contains(this.selectors.continueShoppingButton).should('be.visible').click()
+  }
+
+  clickInViewCartButtonInModal() {
+    cy.contains(this.selectors.viewCartButton).should('be.visible').click()
   }
 }
