@@ -22,14 +22,14 @@ describe('Products', () => {
       loginPage.clickLoginButton()
       headerComponent.verifyUserIsLoggedIn()
     })
-    headerComponent.goToProducts()
+    headerComponent.goToProductsPage()
   })
 
   describe('Product listing and details', () => {
     it('Should display all products, verify product card elements, and navigate to product details page.', () => {
       productsPage.verifyProductsPage()
       productsPage.verifyProductsAreVisible()
-      productsPage.verifyFirstProductCardElements()
+      productsPage.verifyAllProductCardElements()
       productsPage.clickFirstViewProduct()
       productsDetailsPage.verifyProductDetailPage()
       productsDetailsPage.verifyProductDetailsElements()
@@ -41,7 +41,7 @@ describe('Products', () => {
     it('Should search for a product and verify all search results contain the search term.', () => {
       productsPage.verifyProductsPage()
       productsPage.verifyProductsAreVisible()
-      productsPage.verifyFirstProductCardElements()
+      productsPage.verifyAllProductCardElements()
       productsPage.searchForProduct('Top')
       productsPage.verifySearchResultsContain('Top')
     })

@@ -13,7 +13,7 @@ export class HeaderComponent {
     cy.get(this.selectors.homeLink).click()
   }
 
-  goToProducts() {
+  goToProductsPage() {
     cy.get(this.selectors.productsLink).click()
   }
 
