@@ -15,20 +15,17 @@ describe('User Login', () => {
     cy.visit('/')
     homePage.verifyHomePage()
     headerComponent.goToLoginPage()
-
     user = generateFullUser()
   })
 
-  describe('When email is invalid', () => {
-    it('should display error message and prevent user from logging in', () => {
+  describe('When credentials are valid', () => {
+    it('should display an error message and prevent the user from logging in if the email address is invalid.', () => {
       loginPage.fillLoginFormWithInvalidEmail(user)
       loginPage.clickLoginButton()
       loginPage.verifyInvalidEmailErrorMessage()
     })
-  })
 
-  describe('When password is invalid', () => {
-    it('should display error message and prevent user from logging in', () => {
+    it('should display an error message and prevent the user from logging in if the password is invalid.', () => {
       loginPage.fillLoginFormWithInvalidPassword(user)
       loginPage.clickLoginButton()
       loginPage.verifyInvalidPasswordErrorMessage()
@@ -45,13 +42,24 @@ describe('User Login', () => {
       })
     })
   })
+})
 
-  describe('User Logout', () => {
-    it('should successfully log out user and redirect to login page', () => {
-      loginPage.fillLoginForm()
-      loginPage.clickLoginButton()
-      headerComponent.logout()
-      cy.contains('Login to your account').should('be.visible')
-    })
+describe('User Logout', () => {
+  const headerComponent = new HeaderComponent()
+  const homePage = new HomePage()
+  const loginPage = new LoginPage()
+
+  beforeEach(() => {
+    cy.visit('/')
+    homePage.verifyHomePage()
+    headerComponent.goToLoginPage()
+  })
+
+  it('should successfully log out user and redirect to login page', () => {
+    loginPage.fillLoginForm()
+    loginPage.clickLoginButton()
+    headerComponent.verifyUserIsLoggedIn()
+    headerComponent.logout()
+    cy.contains('Login to your account').should('be.visible')
   })
 })

@@ -22,8 +22,8 @@ describe('User Registration', () => {
     user = generateFullUser()
   })
 
-  describe('When email already exists', () => {
-    it('should display error message and prevent account creation', () => {
+  describe('When register data is invalid', () => {
+    it('should display an error message after entering an existing email address and prevent the creation of a new account.', () => {
       loginPage.fillSignupFormWithExistingEmail(user)
       loginPage.clickSignupButton()
       cy.contains('Email Address already exist!').should('be.visible')
