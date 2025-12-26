@@ -4,11 +4,18 @@ export class ViewCartPage {
     selectors = {
         cartPageTitle: 'Shopping Cart',
         cartTableRow: '#cart_info_table tbody tr',
+        checkoutButton: 'Proceed To Checkout',
+        checkoutModal: '#checkoutModal',
+        loginOrRegisterButtonInModal: 'a[href="/login"]',
     }
+
+    // Page Verification Methods
 
     verifyViewCartPage() {
         cy.contains(this.selectors.cartPageTitle).should('be.visible')
     }
+
+    // Cart Methods
 
     clearCartJson() {
         cy.writeFile('cypress/fixtures/cart.json', [])
@@ -28,6 +35,22 @@ export class ViewCartPage {
                     }
                 })
             })
+        })
+    }
+
+    // Checkout Methods
+
+    clickCheckoutButton() {
+        cy.contains(this.selectors.checkoutButton).should('be.visible').click()
+    }
+
+    verifyCheckoutModalIsVisible() {
+        cy.get(this.selectors.checkoutModal).should('be.visible').and('contain.text', 'Checkout')
+    }
+
+    clickInLoginOrRegisterButtonInModal() {
+        cy.get(this.selectors.checkoutModal).should('be.visible').within(() => {
+            cy.get(this.selectors.loginOrRegisterButtonInModal).should('be.visible').click()
         })
     }
 }
