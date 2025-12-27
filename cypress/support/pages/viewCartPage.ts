@@ -7,6 +7,8 @@ export class ViewCartPage {
         checkoutButton: 'Proceed To Checkout',
         checkoutModal: '#checkoutModal',
         loginOrRegisterButtonInModal: 'a[href="/login"]',
+        cartQuantityDelete: 'a[class="cart_quantity_delete"]',
+        cartEmptyMessage: 'Cart is empty'
     }
 
     // Page Verification Methods
@@ -36,6 +38,14 @@ export class ViewCartPage {
                 })
             })
         })
+    }
+
+    removeAllProductsFromCart() {
+        cy.get(this.selectors.cartQuantityDelete).should('be.visible').click()
+    }
+
+    verifyCartIsEmpty() {
+        cy.contains(this.selectors.cartEmptyMessage).should('be.visible')
     }
 
     // Checkout Methods
