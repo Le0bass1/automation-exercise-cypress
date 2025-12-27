@@ -83,6 +83,20 @@ describe('Cart', () => {
         })
     })
 
+    describe('Remove products from cart', () => {
+        beforeEach(() => {
+            goToProductsAndVerify()
+        })
+
+        it('Should remove product from cart', () => {
+            addProductFromDetailsPage(4)
+            viewCartPage.verifyViewCartPage()
+            viewCartPage.verifyCartProductsIsCorrect()
+            viewCartPage.removeAllProductsFromCart()
+            viewCartPage.verifyCartIsEmpty()
+        })
+    })
+
     describe('Checkout flow', () => {
         beforeEach(() => {
             goToProductsAndVerify()
